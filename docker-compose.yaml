@@ -1,18 +1,18 @@
 services:
-  nginx-quictls:
-    build: nginx-quictls
+  nginx-boringssl:
+    build: nginx-boringssl
     expose:
       - "443/tcp"
       - "443/udp"
     volumes:
-      - "./nginx-quictls/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "./nginx-quictls/docroot:/var/www/html:ro"
+      - "./nginx-boringssl/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./nginx-boringssl/docroot:/var/www/html:ro"
       - "./server.crt:/etc/nginx/cert.crt:ro"
       - "./server.key:/etc/nginx/cert.key:ro"
-  curl-quictls:
-    build: curl-quictls
+  curl-boringssl:
+    build: curl-boringssl
     depends_on:
-      - nginx-quictls
-    command: curl -kv --http3 https://nginx-quictls
+      - nginx-boringssl
+    command: curl -sSkv --http3 https://nginx-boringssl
 volumes:
-  nginx-quictls-docroot: {}
+  nginx-boringssl-docroot: {}
